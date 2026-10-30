@@ -54,6 +54,9 @@ Backward walking and body turns are disabled because their policy replay did not
 
 The setup script already runs the automated unit tests. The viewer and microphone require a Windows desktop session with working graphics and audio input.
 
+## Physical build planning
+
+For the 3D-printed robot, use the [verified hardware inventory](docs/hardware_bom.md) before purchasing. It separates the standard walking build from optional roller parts and records unresolved source differences for bearings, printed copies and battery details. The current project does not command real motors.
 ## Source and architecture
 
 - Official XGO-Duck model: [LuwuDynamics/xgoduck_rl](https://github.com/LuwuDynamics/xgoduck_rl), pinned at `fa621fc77ad9a05d69da13270e86118bdd3603fe`.

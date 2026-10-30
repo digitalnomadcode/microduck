@@ -1,0 +1,17 @@
+.venv/
+.venv312/
+.python/
+.python-bin/
+.uv-cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+vendor/
+assets/speech/
+assets/models/
+tools/llama.cpp/
+.env
+.env.*
+*.log
+.vscode/
+.idea/

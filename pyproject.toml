@@ -1,0 +1,9 @@
+[project]
+name = "microduck-sim"
+version = "0.2.0"
+description = "CPU-first MuJoCo control for the official XGO-Duck model"
+requires-python = ">=3.12"
+dependencies = ["mujoco==3.17.0"]
+
+[project.optional-dependencies]
+policy = ["onnxruntime==1.22.1"]

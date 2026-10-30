@@ -34,8 +34,18 @@ function Checkout-Upstream([string]$url, [string]$path, [string]$commit) {
         if (Test-Path -LiteralPath $path) {
             throw "Directory exists without Git metadata: $path"
         }
-        & git clone --depth 1 $url $path
+        $stage = "$path.partial"
+        $vendorRoot = [IO.Path]::GetFullPath((Join-Path $root "vendor"))
+        $stageFull = [IO.Path]::GetFullPath($stage)
+        if (-not $stageFull.StartsWith($vendorRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+            throw "Unsafe temporary clone path: $stage"
+        }
+        if (Test-Path -LiteralPath $stage) {
+            Remove-Item -LiteralPath $stage -Recurse -Force
+        }
+        & git clone --depth 1 $url $stage
         Check-Exit "Clone $url"
+        Move-Item -LiteralPath $stage -Destination $path
     }
     $head = (& git -C $path rev-parse HEAD).Trim()
     Check-Exit "Inspect $path"

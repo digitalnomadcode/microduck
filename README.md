@@ -15,7 +15,7 @@ cd microduck
 .\.venv312\Scripts\python.exe scripts\talk_to_duck.py --ai --voice
 ```
 
-The setup script creates an isolated environment, installs Python dependencies, checks out pinned official XGO-Duck repositories, downloads the offline Vosk and Qwen models plus a Windows CPU llama.cpp build, verifies SHA-256 hashes, and runs the project tests. The Qwen file is about 1.83 GB, so the initial download may take several minutes. Run the setup script again if a download is interrupted; it resumes the file.
+The setup script creates an isolated environment, installs Python dependencies, checks out pinned official XGO-Duck repositories, downloads the offline Vosk and Qwen models plus a Windows CPU llama.cpp build, verifies SHA-256 hashes, and runs the project tests. The Qwen file is about 1.83 GB, so the initial download may take several minutes. Run the setup script again if a download is interrupted; model downloads resume, and an incomplete upstream Git clone restarts.
 
 Speak a phrase, then pause so speech recognition can finalize it. Examples: `иди вперёд`, `остановись`, `посмотри налево`, `как тебя зовут?`, and `сделай пару шагов прямо`. The console prints `heard>` and the response. The MuJoCo window shows the robot. Text commands also work at the `duck>` prompt. Type `выход` to close the app.
 

@@ -1,5 +1,5 @@
 # Reproduce the CPU simulation, speech, and local language model on Windows.
-param([switch]$SkipAI)
+param([switch]$SkipAI, [string]$PythonExe = "")
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
@@ -57,10 +57,13 @@ if (-not (Get-Command curl.exe -ErrorAction SilentlyContinue)) {
 
 $python = Join-Path $root ".venv312\Scripts\python.exe"
 if (-not (Test-Path -LiteralPath $python)) {
-    if (-not (Get-Command py -ErrorAction SilentlyContinue)) {
-        throw "Python 3.12 is required. Install 64-bit Python 3.12 with the Windows py launcher."
+    if ($PythonExe) {
+        & $PythonExe -m venv (Join-Path $root ".venv312")
+    } elseif (Get-Command py -ErrorAction SilentlyContinue) {
+        & py -3.12 -m venv (Join-Path $root ".venv312")
+    } else {
+        throw "Python 3.12 is required. Install it with the Windows py launcher or pass -PythonExe."
     }
-    & py -3.12 -m venv (Join-Path $root ".venv312")
     Check-Exit "Create Python 3.12 virtual environment"
 }
 & $python -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
@@ -95,4 +98,8 @@ if (-not $SkipAI) {
 
 & $python -m unittest discover -s tests -q
 Check-Exit "Project tests"
-Write-Host "Setup complete. Start: .\.venv312\Scripts\python.exe scripts\talk_to_duck.py --ai --voice"
+if ($SkipAI) {
+    Write-Host "Setup complete. Start: .\.venv312\Scripts\python.exe scripts\talk_to_duck.py --voice"
+} else {
+    Write-Host "Setup complete. Start: .\.venv312\Scripts\python.exe scripts\talk_to_duck.py --ai --voice"
+}
